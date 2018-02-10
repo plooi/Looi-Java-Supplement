@@ -40,6 +40,26 @@ Returns an Iterable<Integer> that will, when passed into a for-each loop, cause 
 "toString"... static String toString(Object o)
 Returns a String that is a meaningful description of the value of the parameter "o". This meaningful description consists of the type of the object and the values of all of its fields, including its inherited fields. 
 
-----------------------------------------------------------------------------------------------------------------------------------------
-Here is a description of the classes in ljs.gui:
+"stop"... void stop()
+Makes the entire program stop its execution.
 
+----------------------------------------------------------------------------------------------------------------------------------------
+Here is a description of the most important classes in ljs.gui:
+
+"Window"... class Window
+Use Window's zero argument constructor to make a new window appear on the screen. The upon closing method will cause the window to execute an action when the close (X) button on the window is pressed. Use the setBounds(int x, int y, int width, int height) method to set the window's location and dimensions. Use the Window's add(Component c) method to add a GUI component to the window.
+
+"Component"... abstract class Component
+This class is the superclass of all GUI components that can be added to a window. It has methods like setBounds(int x, int y, int width, int height), which will set the component's location and dimensions, and setVisible(boolean b) which will make the component visible or not. All components will initially be located at 0,0 with width and height of 200,200, util the setBounds method is called.
+
+"Button"... class Button extends Component
+Instantiate a Button using the constructor that takes a single argument of an Action, and that Action will be performed upon the pressing of the Button. This class inherits all abilities of the Component class. Do not forget that a Button must added to a window before it will show up in the window.
+
+"TextBox"... class TextBox extends Component
+Instantiate a TextBox using the no argument constructor, and you will automatically have a text box that the user can type text into. Use the getText() method to access that text. This class inherits all abilities of the Component class. Do not forget that a TextBox must added to a window before it will show up in the window.
+
+"Picture"... class Picture extends Component
+Instantiate a Picture by passing in either an Image or Color into the constructor. When added to a window, a Picture object will display a the corresponding image (or just a big rectange of the corresponding color if the color constructor was used) at its x,y,with,height which are properties of the superclass. This class inherits all abilities of the Component class. Do not forget that a Picture must added to a window before it will show up in the window.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+Here is a description of the most important classes in ljs.gui.looicanvas:
