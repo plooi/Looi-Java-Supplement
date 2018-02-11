@@ -61,5 +61,71 @@ Instantiate a TextBox using the no argument constructor, and you will automatica
 "Picture"... class Picture extends Component
 Instantiate a Picture by passing in either an Image or Color into the constructor. When added to a window, a Picture object will display a the corresponding image (or just a big rectange of the corresponding color if the color constructor was used) at its x,y,with,height which are properties of the superclass. This class inherits all abilities of the Component class. Do not forget that a Picture must added to a window before it will show up in the window.
 
+Here is some code that makes a Window, a TextBox, and a Button, and whenever the Button is pressed, the program prints out the text that is in the TextBox.
+
+import ljs.gui.*;
+import static ljs.Obj.*;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Window w = new Window();
+        w.uponClosing(()->stop());
+        
+        TextBox tb = new TextBox();
+        tb.setBounds(250,0,150,40);
+        
+        Button b = new Button(()->print(tb.getText()));
+        b.setBounds(250,40,150,40);
+        b.setLabel("Print it!");
+    
+        w.add(tb);
+        w.add(b);
+    }
+}
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 Here is a description of the most important classes in ljs.gui.looicanvas:
+
+"LooiCanvas"... class LooiCanvas extends Component
+A LooiCanvas is a canvas on which a complicated gui display, such as a videogame, can be drawn on. There are many constructors, but you may use the zero arg constructor as it is the least complicated. Do not forget that a LooiCanvas must added to a window before it will show up in the window. Before it will work properly, however, you MUST call the (Object of LooiCanvas).start() method. Then, it will start rendering the game display.
+
+"LooiObject"... class LooiObject
+A LooiObject is an object that when made, it will be by default added to the LooiCanvas' collection of active LooiObjects. Whoa, what is an active LooiObject? An active LooiObject is a LooiObject that will have its looiStep() and looiPaint() methods called approximately once per rendering cycle. Override the looiStep() and looiPaint() methods to achieve the functionality that you want. looiStep() should be overridden with the calculations, or other such things that should run at every "step" in the game. looiPaint() should be overridden to perform the graphical painting operations that will be performed at every step, such as fillRect(double x, double y, double width, double height) and setColor(Color color), to name a few. All the graphical painting operations are instance methods of LooiObject.
+
+Here is some sample code that creates a Window, LooiCanvas, and a LooiObject, and that LooiObject is responsible for making a square rotate around the center of the screen:
+
+import ljs.gui.*;
+import ljs.gui.looicanvas.*;
+import static ljs.Obj.*;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Window w = new Window();
+        w.uponClosing(()->stop());
+        
+        LooiCanvas lc = new LooiCanvas();
+        w.add(lc);
+        lc.fullScreen();
+        
+        new LooiObject()
+        {
+            double timer = 0;
+            public void looiStep()
+            {
+                timer += .03;
+            }
+            public void looiPaint()
+            {
+            
+                fillRect(800+300*Math.cos(timer),500 + 300*Math.sin(timer),50,50);
+            }
+        };
+        
+        lc.start();
+    
+    }
+}
